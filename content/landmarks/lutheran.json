@@ -1,0 +1,47 @@
+{
+  "land": "lutheran",
+  "landmarks": [
+    {
+      "id": "confessional-church",
+      "name": "The Church",
+      "position": [0, 0, -12],
+      "description": "A confessional Lutheran congregation",
+      "content": "Confessional Lutheranism subscribes to the Book of Concord quia — because it agrees with Scripture. Doctrine does not override exegesis; exegesis drives doctrine."
+    },
+    {
+      "id": "luther-rose",
+      "name": "Luther's Rose",
+      "position": [10, 0, -6],
+      "description": "The seal of Martin Luther",
+      "content": "A black cross on a red heart, set in a white rose, on a sky-blue field, ringed in gold. Each element carries its own weight: the cross is black because it mortifies; the heart remains red because faith keeps it alive."
+    },
+    {
+      "id": "book-of-concord",
+      "name": "Book of Concord",
+      "position": [-10, 0, -6],
+      "description": "The Lutheran confessional documents",
+      "content": "The Book of Concord (1580) collects the confessional writings of the Lutheran church. Subscription is quia — because these documents agree with Scripture — not quatenus, insofar as they agree. The distinction is load-bearing."
+    },
+    {
+      "id": "baptismal-font",
+      "name": "The Font",
+      "position": [0, 0, -5],
+      "description": "The sacrament of Holy Baptism",
+      "content": "Matter matters. The water of baptism is not merely symbolic — God works through physical means. Sacramental realism: creation, body, and institution carry genuine theological weight."
+    },
+    {
+      "id": "vocation",
+      "name": "Daily Vocation",
+      "position": [8, 0, 0],
+      "description": "The theology of ordinary work",
+      "content": "Faithful presence in ordinary roles is the frame. Not activism, not transformation — the work of each station done well. The Lutheran doctrine of vocation dignifies the everyday."
+    },
+    {
+      "id": "lcms",
+      "name": "The Missouri Synod",
+      "position": [-8, 0, 0],
+      "description": "The Lutheran Church—Missouri Synod",
+      "content": "The LCMS is a confessional Lutheran church body in the United States, committed to the inerrancy of Scripture and the Lutheran Confessions. It is the denominational home of this faith."
+    }
+  ]
+}
