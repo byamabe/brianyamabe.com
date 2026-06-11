@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 
-const MOVE_SPEED = 6    // units per second
+const MOVE_SPEED = 6       // units per second (walk)
+const SPRINT_SPEED = 18    // units per second (hold Shift)
 const CAM_RADIUS = 12   // distance from character to camera
 const CAM_LOOK_UP = 0.8 // lookAt offset above character center
 
@@ -53,7 +54,8 @@ export function useCharacterController(
       _moveDir.normalize()
       _euler.set(0, yaw, 0)
       _moveDir.applyEuler(_euler)
-      character.position.addScaledVector(_moveDir, MOVE_SPEED * delta)
+      const speed = (keys.has('ShiftLeft') || keys.has('ShiftRight')) ? SPRINT_SPEED : MOVE_SPEED
+      character.position.addScaledVector(_moveDir, speed * delta)
       character.position.y = 1.0 // flat ground lock
       // Rotate character to face movement direction
       // Convention matches GLTF characters exported from Blender/Mixamo (+Z forward at rest)
