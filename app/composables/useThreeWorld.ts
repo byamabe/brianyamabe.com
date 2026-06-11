@@ -18,6 +18,9 @@ const PALETTE = {
   cream: 0xf5f0e0,
   darkBrown: 0x1e0e06,
   bookCover: 0x5c3d1e,
+  japanGreen: 0x6b8e7a,
+  softwareBlue: 0x5c7a8b,
+  disneyTan: 0x8b7a5c,
 }
 
 export function useThreeWorld(canvas: HTMLCanvasElement, activeLandmarkId: Ref<string | null>) {
@@ -351,6 +354,144 @@ export function useThreeWorld(canvas: HTMLCanvasElement, activeLandmarkId: Ref<s
 
   lcmsGroup.position.set(LX + -8, 0, LZ + 0)
   scene.add(lcmsGroup)
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  // ─── Lutheran Media Land ─────────────────────────────────────────────────────
+  // NW spoke: x ≈ -50, z ≈ -50
+  const lmTerrain = new THREE.Mesh(
+    new THREE.PlaneGeometry(70, 70),
+    new THREE.MeshLambertMaterial({ color: PALETTE.timber }),
+  )
+  lmTerrain.rotation.x = -Math.PI / 2
+  lmTerrain.position.set(-50, 0.02, -50)
+  lmTerrain.receiveShadow = true
+  scene.add(lmTerrain)
+
+  const lmMarker = new THREE.Group()
+  const lmPost = new THREE.Mesh(
+    new THREE.BoxGeometry(0.25, 3.8, 0.25),
+    new THREE.MeshLambertMaterial({ color: PALETTE.stone }),
+  )
+  lmPost.position.y = 1.9
+  lmPost.castShadow = true
+  lmMarker.add(lmPost)
+  const lmSign = new THREE.Mesh(
+    new THREE.BoxGeometry(3.2, 1.4, 0.2),
+    new THREE.MeshLambertMaterial({ color: PALETTE.timber }),
+  )
+  lmSign.position.y = 3.9
+  lmMarker.add(lmSign)
+  const lmAntenna = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.06, 0.15, 1.2, 6),
+    new THREE.MeshLambertMaterial({ color: PALETTE.stone }),
+  )
+  lmAntenna.position.y = 5.5
+  lmMarker.add(lmAntenna)
+  lmMarker.position.set(-50, 0, -50)
+  scene.add(lmMarker)
+
+  // ─── Japanese Land ───────────────────────────────────────────────────────────
+  // NE spoke: x ≈ +50, z ≈ -50
+  const japTerrain = new THREE.Mesh(
+    new THREE.PlaneGeometry(70, 70),
+    new THREE.MeshLambertMaterial({ color: PALETTE.japanGreen }),
+  )
+  japTerrain.rotation.x = -Math.PI / 2
+  japTerrain.position.set(50, 0.02, -50)
+  japTerrain.receiveShadow = true
+  scene.add(japTerrain)
+
+  const japMarker = new THREE.Group()
+  const japPost = new THREE.Mesh(
+    new THREE.BoxGeometry(0.25, 3.8, 0.25),
+    new THREE.MeshLambertMaterial({ color: PALETTE.stone }),
+  )
+  japPost.position.y = 1.9
+  japPost.castShadow = true
+  japMarker.add(japPost)
+  const japSign = new THREE.Mesh(
+    new THREE.BoxGeometry(3.2, 1.4, 0.2),
+    new THREE.MeshLambertMaterial({ color: PALETTE.japanGreen }),
+  )
+  japSign.position.y = 3.9
+  japMarker.add(japSign)
+  const japFinial = new THREE.Mesh(
+    new THREE.ConeGeometry(0.35, 0.7, 4),
+    new THREE.MeshLambertMaterial({ color: PALETTE.roof }),
+  )
+  japFinial.rotation.y = Math.PI / 4
+  japFinial.position.y = 5.0
+  japMarker.add(japFinial)
+  japMarker.position.set(50, 0, -50)
+  scene.add(japMarker)
+
+  // ─── Software Land ───────────────────────────────────────────────────────────
+  // SW spoke: x ≈ -50, z ≈ +50
+  const swTerrain = new THREE.Mesh(
+    new THREE.PlaneGeometry(70, 70),
+    new THREE.MeshLambertMaterial({ color: PALETTE.softwareBlue }),
+  )
+  swTerrain.rotation.x = -Math.PI / 2
+  swTerrain.position.set(-50, 0.02, 50)
+  swTerrain.receiveShadow = true
+  scene.add(swTerrain)
+
+  const swMarker = new THREE.Group()
+  const swPost = new THREE.Mesh(
+    new THREE.BoxGeometry(0.25, 3.8, 0.25),
+    new THREE.MeshLambertMaterial({ color: PALETTE.stone }),
+  )
+  swPost.position.y = 1.9
+  swPost.castShadow = true
+  swMarker.add(swPost)
+  const swSign = new THREE.Mesh(
+    new THREE.BoxGeometry(3.2, 1.4, 0.2),
+    new THREE.MeshLambertMaterial({ color: PALETTE.softwareBlue }),
+  )
+  swSign.position.y = 3.9
+  swMarker.add(swSign)
+  const swFinial = new THREE.Mesh(
+    new THREE.BoxGeometry(0.5, 0.4, 0.5),
+    new THREE.MeshLambertMaterial({ color: PALETTE.stone }),
+  )
+  swFinial.position.y = 5.1
+  swMarker.add(swFinial)
+  swMarker.position.set(-50, 0, 50)
+  scene.add(swMarker)
+
+  // ─── Walt Disney Land ────────────────────────────────────────────────────────
+  // SE spoke: x ≈ +50, z ≈ +50
+  const wdTerrain = new THREE.Mesh(
+    new THREE.PlaneGeometry(70, 70),
+    new THREE.MeshLambertMaterial({ color: PALETTE.disneyTan }),
+  )
+  wdTerrain.rotation.x = -Math.PI / 2
+  wdTerrain.position.set(50, 0.02, 50)
+  wdTerrain.receiveShadow = true
+  scene.add(wdTerrain)
+
+  const wdMarker = new THREE.Group()
+  const wdPost = new THREE.Mesh(
+    new THREE.BoxGeometry(0.25, 3.8, 0.25),
+    new THREE.MeshLambertMaterial({ color: PALETTE.stone }),
+  )
+  wdPost.position.y = 1.9
+  wdPost.castShadow = true
+  wdMarker.add(wdPost)
+  const wdSign = new THREE.Mesh(
+    new THREE.BoxGeometry(3.2, 1.4, 0.2),
+    new THREE.MeshLambertMaterial({ color: PALETTE.disneyTan }),
+  )
+  wdSign.position.y = 3.9
+  wdMarker.add(wdSign)
+  const wdFinial = new THREE.Mesh(
+    new THREE.ConeGeometry(0.2, 1.0, 8),
+    new THREE.MeshLambertMaterial({ color: PALETTE.roof }),
+  )
+  wdFinial.position.y = 5.4
+  wdMarker.add(wdFinial)
+  wdMarker.position.set(50, 0, 50)
+  scene.add(wdMarker)
   // ─────────────────────────────────────────────────────────────────────────────
 
   // Proximity zones — ring on ground + character distance check
