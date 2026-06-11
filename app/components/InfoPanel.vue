@@ -1,10 +1,17 @@
 <template>
   <Transition name="panel">
-    <div v-if="landmark" class="info-panel" role="status" :aria-label="landmark.name">
+    <div
+      v-if="landmark"
+      class="info-panel"
+      :class="{ 'has-link': !!landmark.url }"
+      role="status"
+      :aria-label="landmark.name"
+    >
       <p class="landmark-label">Lutheran Land</p>
       <h2>{{ landmark.name }}</h2>
       <p class="description">{{ landmark.description }}</p>
       <p class="content">{{ landmark.content }}</p>
+      <p v-if="landmark.url" class="enter-hint">↵</p>
     </div>
   </Transition>
 </template>
@@ -15,6 +22,7 @@ interface Landmark {
   name: string
   description: string
   content: string
+  url?: string
 }
 
 defineProps<{
@@ -37,6 +45,10 @@ defineProps<{
   padding: 1.125rem 1.375rem 1.25rem;
   backdrop-filter: blur(10px);
   pointer-events: none;
+}
+
+.info-panel.has-link {
+  border-color: rgba(232, 213, 183, 0.55);
 }
 
 .landmark-label {
@@ -66,6 +78,14 @@ h2 {
   line-height: 1.6;
   margin: 0;
   opacity: 0.82;
+}
+
+.enter-hint {
+  margin: 0.75rem 0 0;
+  text-align: right;
+  font-size: 0.75rem;
+  opacity: 0.35;
+  letter-spacing: 0.05em;
 }
 
 .panel-enter-active,

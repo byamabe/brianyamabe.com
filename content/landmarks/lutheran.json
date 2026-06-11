@@ -20,7 +20,8 @@
       "name": "Book of Concord",
       "position": [-10, 0, -6],
       "description": "The Lutheran confessional documents",
-      "content": "The Book of Concord (1580) collects the confessional writings of the Lutheran church. Subscription is quia — because these documents agree with Scripture — not quatenus, insofar as they agree. The distinction is load-bearing."
+      "content": "The Book of Concord (1580) collects the confessional writings of the Lutheran church. Subscription is quia — because these documents agree with Scripture — not quatenus, insofar as they agree. The distinction is load-bearing.",
+      "url": "https://bookofconcord.org"
     },
     {
       "id": "baptismal-font",
@@ -41,7 +42,8 @@
       "name": "The Missouri Synod",
       "position": [-8, 0, 0],
       "description": "The Lutheran Church—Missouri Synod",
-      "content": "The LCMS is a confessional Lutheran church body in the United States, committed to the inerrancy of Scripture and the Lutheran Confessions. It is the denominational home of this faith."
+      "content": "The LCMS is a confessional Lutheran church body in the United States, committed to the inerrancy of Scripture and the Lutheran Confessions. It is the denominational home of this faith.",
+      "url": "https://www.lcms.org"
     }
   ]
 }

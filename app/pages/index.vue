@@ -27,6 +27,18 @@ const activeLandmark = computed(
   () => lutheranData.landmarks.find(l => l.id === activeLandmarkId.value) ?? null,
 )
 
+function onKeyDown(e: KeyboardEvent) {
+  if (e.key !== 'Enter') return
+  const url = activeLandmark.value?.url
+  if (!url) return
+  if (url.startsWith('http')) {
+    window.open(url, '_blank', 'noopener')
+  }
+  else {
+    navigateTo(url)
+  }
+}
+
 onMounted(() => {
   isMobile.value = window.innerWidth < 768
 
@@ -34,6 +46,9 @@ onMounted(() => {
     const { dispose } = useThreeWorld(canvas.value, activeLandmarkId)
     onUnmounted(dispose)
   }
+
+  window.addEventListener('keydown', onKeyDown)
+  onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
 })
 </script>
 
