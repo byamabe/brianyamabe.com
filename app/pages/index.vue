@@ -10,20 +10,28 @@
       <p class="sub">The 3D world requires a desktop browser.<br>Use the menu to explore.</p>
       <p class="hint">Tap ☰ in the top right to navigate.</p>
     </div>
+
+    <InfoPanel :landmark="activeLandmark" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useThreeWorld } from '~/composables/useThreeWorld'
+import lutheranData from '~~/content/landmarks/lutheran.json'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 const isMobile = ref(false)
+const activeLandmarkId = ref<string | null>(null)
+
+const activeLandmark = computed(
+  () => lutheranData.landmarks.find(l => l.id === activeLandmarkId.value) ?? null,
+)
 
 onMounted(() => {
   isMobile.value = window.innerWidth < 768
 
   if (!isMobile.value && canvas.value) {
-    const { dispose } = useThreeWorld(canvas.value)
+    const { dispose } = useThreeWorld(canvas.value, activeLandmarkId)
     onUnmounted(dispose)
   }
 })

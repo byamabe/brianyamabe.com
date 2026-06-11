@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import type { Ref } from 'vue'
 import { useCharacterController } from './useCharacterController'
 
 // Warm palette derived from the art style: earth tones, soft light
@@ -19,7 +20,7 @@ const PALETTE = {
   bookCover: 0x5c3d1e,
 }
 
-export function useThreeWorld(canvas: HTMLCanvasElement) {
+export function useThreeWorld(canvas: HTMLCanvasElement, activeLandmarkId: Ref<string | null>) {
   const scene = new THREE.Scene()
   scene.background = new THREE.Color(PALETTE.sky)
   scene.fog = new THREE.FogExp2(PALETTE.fog, 0.008)
@@ -352,6 +353,35 @@ export function useThreeWorld(canvas: HTMLCanvasElement) {
   scene.add(lcmsGroup)
   // ─────────────────────────────────────────────────────────────────────────────
 
+  // Proximity zones — ring on ground + character distance check
+  const zones: { id: string; x: number; z: number; r2: number }[] = []
+  const rings: { mesh: THREE.Mesh; phase: number }[] = []
+
+  function addLandmarkZone(id: string, x: number, z: number) {
+    const ring = new THREE.Mesh(
+      new THREE.RingGeometry(1.8, 2.5, 48),
+      new THREE.MeshBasicMaterial({
+        color: 0xe8c49a,
+        transparent: true,
+        opacity: 0.3,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      }),
+    )
+    ring.rotation.x = -Math.PI / 2
+    ring.position.set(x, 0.06, z)
+    scene.add(ring)
+    rings.push({ mesh: ring, phase: Math.random() * Math.PI * 2 })
+    zones.push({ id, x, z, r2: 9 }) // 3-unit trigger radius
+  }
+
+  addLandmarkZone('confessional-church', LX + 0, LZ + -12)
+  addLandmarkZone('luther-rose', LX + 10, LZ + -6)
+  addLandmarkZone('book-of-concord', LX + -10, LZ + -6)
+  addLandmarkZone('baptismal-font', LX + 0, LZ + -5)
+  addLandmarkZone('vocation', LX + 8, LZ + 0)
+  addLandmarkZone('lcms', LX + -8, LZ + 0)
+
   const controller = useCharacterController(scene, camera, canvas)
 
   // Resize handler
@@ -366,10 +396,37 @@ export function useThreeWorld(canvas: HTMLCanvasElement) {
 
   // Render loop
   const clock = new THREE.Clock()
+  let elapsed = 0
   let rafId: number
+
+  function checkZones() {
+    const { x, z } = controller.character.position
+    let found: string | null = null
+    let closestD2 = Infinity
+    for (const zone of zones) {
+      const dx = x - zone.x
+      const dz = z - zone.z
+      const d2 = dx * dx + dz * dz
+      if (d2 < zone.r2 && d2 < closestD2) {
+        found = zone.id
+        closestD2 = d2
+      }
+    }
+    if (found !== activeLandmarkId.value) activeLandmarkId.value = found
+  }
+
   function animate() {
     rafId = requestAnimationFrame(animate)
-    controller.update(clock.getDelta())
+    const delta = clock.getDelta()
+    elapsed += delta
+    controller.update(delta)
+    checkZones()
+    for (const { mesh, phase } of rings) {
+      const pulse = Math.sin(elapsed * 1.8 + phase) * 0.5 + 0.5
+      ;(mesh.material as THREE.MeshBasicMaterial).opacity = 0.12 + pulse * 0.22
+      const s = 0.96 + pulse * 0.08
+      mesh.scale.set(s, s, 1)
+    }
     renderer.render(scene, camera)
   }
   animate()
