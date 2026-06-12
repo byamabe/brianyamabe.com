@@ -390,6 +390,31 @@ export function useThreeWorld(canvas: HTMLCanvasElement, activeLandmarkId: Ref<s
   lmMarker.position.set(-50, 0, -50)
   scene.add(lmMarker)
 
+  // Synod Stories bulletin board — faces hub (rotation PI/4 points +Z face toward origin)
+  const billboardGroup = new THREE.Group()
+  const bPostMat = new THREE.MeshLambertMaterial({ color: PALETTE.stone })
+  for (const bx of [-1.6, 1.6]) {
+    const post = new THREE.Mesh(new THREE.BoxGeometry(0.2, 4.0, 0.2), bPostMat)
+    post.position.set(bx, 2.0, 0)
+    post.castShadow = true
+    billboardGroup.add(post)
+  }
+  const board = new THREE.Mesh(
+    new THREE.BoxGeometry(3.4, 2.0, 0.15),
+    new THREE.MeshLambertMaterial({ color: PALETTE.timber }),
+  )
+  board.position.y = 3.1
+  billboardGroup.add(board)
+  const topRail = new THREE.Mesh(
+    new THREE.BoxGeometry(3.8, 0.2, 0.25),
+    new THREE.MeshLambertMaterial({ color: PALETTE.stone }),
+  )
+  topRail.position.y = 4.2
+  billboardGroup.add(topRail)
+  billboardGroup.position.set(-42, 0, -42)
+  billboardGroup.rotation.y = Math.PI / 4
+  scene.add(billboardGroup)
+
   // ─── Japanese Land ───────────────────────────────────────────────────────────
   // NE spoke: x ≈ +50, z ≈ -50
   const japTerrain = new THREE.Mesh(
@@ -516,6 +541,7 @@ export function useThreeWorld(canvas: HTMLCanvasElement, activeLandmarkId: Ref<s
     zones.push({ id, x, z, r2: 9 }) // 3-unit trigger radius
   }
 
+  addLandmarkZone('synod-stories-billboard', -42, -42)
   addLandmarkZone('confessional-church', LX + 0, LZ + -12)
   addLandmarkZone('luther-rose', LX + 10, LZ + -6)
   addLandmarkZone('book-of-concord', LX + -10, LZ + -6)

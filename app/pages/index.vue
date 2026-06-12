@@ -11,13 +11,17 @@
       <p class="hint">Tap ☰ in the top right to navigate.</p>
     </div>
 
-    <InfoPanel :landmark="activeLandmark" />
+    <InfoPanel :landmark="activeLandmark" :land-label="activeLandmarkLandLabel" />
+    <Transition name="panel">
+      <RssBillboard v-if="activeLandmarkId === 'synod-stories-billboard'" />
+    </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useThreeWorld } from '~/composables/useThreeWorld'
 import lutheranData from '~~/content/landmarks/lutheran.json'
+import lutheranMediaData from '~~/content/landmarks/lutheran-media.json'
 
 const canvas = ref<HTMLCanvasElement | null>(null)
 const isMobile = ref(false)
@@ -26,6 +30,13 @@ const activeLandmarkId = ref<string | null>(null)
 const activeLandmark = computed(
   () => lutheranData.landmarks.find(l => l.id === activeLandmarkId.value) ?? null,
 )
+
+const activeLandmarkLandLabel = computed(() => {
+  if (!activeLandmarkId.value) return ''
+  if (lutheranData.landmarks.some(l => l.id === activeLandmarkId.value)) return 'Lutheran Land'
+  if (lutheranMediaData.landmarks.some(l => l.id === activeLandmarkId.value)) return 'Lutheran Media'
+  return ''
+})
 
 function onKeyDown(e: KeyboardEvent) {
   if (e.key !== 'Enter') return

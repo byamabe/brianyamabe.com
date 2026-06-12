@@ -7,7 +7,7 @@
       role="status"
       :aria-label="landmark.name"
     >
-      <p class="landmark-label">Lutheran Land</p>
+      <p class="landmark-label">{{ landLabel }}</p>
       <h2>{{ landmark.name }}</h2>
       <p class="description">{{ landmark.description }}</p>
       <p class="content">{{ landmark.content }}</p>
@@ -27,6 +27,7 @@ interface Landmark {
 
 defineProps<{
   landmark: Landmark | null
+  landLabel?: string
 }>()
 </script>
 

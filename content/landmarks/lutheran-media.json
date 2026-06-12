@@ -1,0 +1,11 @@
+{
+  "land": "lutheran-media",
+  "landmarks": [
+    {
+      "id": "synod-stories-billboard",
+      "name": "Synod Stories",
+      "description": "Lutheran Media podcast",
+      "position": [-42, 0, -42]
+    }
+  ]
+}
